@@ -22,7 +22,8 @@ class PredictorController extends Controller
 
             // Ejecutar el script Python
             // Ejecutar el script Python
-            $scriptPath = storage_path('scripts\\'); // Ruta al directorio de scripts
+            // $scriptPath = storage_path('scripts\\'); // Ruta al directorio de scripts
+            $scriptPath = '/storage/scripts/'; // Ruta al directorio de scripts
             $script = $scriptPath . 'hand_prediction.py'; // Nombre del script Python
             $command = "python3 $script $nombreImagen"; // Comando para ejecutar el script Python
             $output = shell_exec($command);
