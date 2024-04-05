@@ -36,6 +36,7 @@ class Nurses extends Component
 
     public function add_nurse()
     {
+        dd('hola');
         if ($this->edit_photo) {
             $this->update($this->edit_nurse_id);
         } else {
@@ -51,7 +52,7 @@ class Nurses extends Component
                 'photo' => 'required|image|max:3072',
             ]);
 
-            nurse::create([
+            employee::create([
                 'name' => $this->name,
                 'email' => $this->email,
                 'phone' => $this->phone,
@@ -166,4 +167,11 @@ class Nurses extends Component
             'nurses' => Employee::where('position', 'nurse')->latest()->paginate(10),
         ])->layout('admins.layouts.app');
     }
+
+    // public function render()
+    // {
+    //     return view('livewire.admins.doctors',[
+    //         'nurses'=>nurse::latest()->paginate(10),
+    //     ])->layout('admins.layouts.app');
+    // }
 }
