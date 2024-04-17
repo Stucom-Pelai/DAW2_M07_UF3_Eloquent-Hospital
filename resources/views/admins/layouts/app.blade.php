@@ -52,7 +52,7 @@
                     <a href="{{ route('contactedus') }}"><i class="fas fa-file-alt"></i>Contacted Messages</a>
                 </li>
                 <li>
-                    <a href="{{ route('departments') }}"><i class="fas fa-file-alt"></i>Departments</a>
+                    <a href="{{ route('departments') }}"><i class="fas fa-file-alt"></i>Manolo</a>
                 </li>
                 <li>
                     <a href="{{ route('admin_doctors') }}"><i class="fas fa-file-alt"></i>Doctors</a>

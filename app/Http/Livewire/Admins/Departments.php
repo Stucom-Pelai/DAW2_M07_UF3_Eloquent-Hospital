@@ -126,7 +126,7 @@ class Departments extends Component
 
     public function render()
     {
-
+        
         return view('livewire.admins.departments',[
             'departments' => department::latest()->paginate(10),
             'hods' => hod::all(),

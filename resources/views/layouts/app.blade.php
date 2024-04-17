@@ -86,7 +86,7 @@ $settings = $setting[0];
                             <li onclick="check_active('Home')"><a id="Home" href="{{ url('/') }}">Home</a></li>
                             <li onclick="check_active('Services')"><a id="Services" data-scroll href="{{ url('/services') }}">Services</a></li>
                             <li onclick="check_active('Doctors')"><a id="Doctors" data-scroll href="{{ url('doctors') }}">Doctors</a></li>
-                            <li onclick="check_active('Departments')"><a id="Departments" data-scroll href="#departments">Departments</a></li>
+                            <li onclick="check_active('Departments')"><a id="Departments" data-scroll href="{{ route('departments') }}"">Departments</a></li>
                             <li onclick="check_active('About')"><a id="About" data-scroll href="{{ url('/about') }}">About us</a></li>
                             <li onclick="check_active('Contact')"><a id="Contact" data-scroll href="{{ url('contact') }}">Contact</a></li>
                             @auth

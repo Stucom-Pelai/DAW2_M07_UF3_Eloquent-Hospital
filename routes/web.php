@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Livewire\Admins\Departments;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,7 +51,7 @@ Route::middleware(['auth', 'checksuperadmin'])->group(function () {
 
         Route::get('/medicinesStore', App\Http\Livewire\Admins\Medicinestore::class)->name('medicinesStore');
 
-        Route::get('/departments', App\Http\Livewire\Admins\Departments::class)->name('departments');
+        Route::get('/departments', [Departments::class, 'render'])->name('departments');
 
         Route::get('/employees', App\Http\Livewire\Admins\Employees::class)->name('employees');
 

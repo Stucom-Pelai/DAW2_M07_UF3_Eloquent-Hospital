@@ -10,37 +10,37 @@ class PredictorController extends Controller
     public function index(Request $request)
     {
         // Verifica si hay una imagen en la solicitud
-        if ($request->isMethod('post') && $request->getContent()) {
+        if ($request->isMethod('post')) {
             // Accede al contenido de la solicitud y guarda la imagen temporalmente
-            $imagen = $request->getContent();
-            $extension = $this->getExtension($request->header('content-type'));
-            $nombreImagen = uniqid() . '.' . $extension; // Genera un nombre de archivo único
-            $rutaTemp = 'public/storage/temp/' . $nombreImagen;
+            if ($request->hasFile('photo')) {
+                $imagen = $request->file('photo');
+                
+                // Genera un nombre único para la imagen
+                $nombreImagen = uniqid() . '.' . $imagen->getClientOriginalExtension();
+                
+                // Guarda la imagen en la carpeta public/storage/temp con el nombre único
+                $rutaTemp = Storage::disk('public')->put('temp', $imagen);
+                
+                // Ejecutar el script Python
+                // $scriptPath = storage_path('scripts\\'); // Ruta al directorio de scripts
+                $scriptPath = public_path('storage/scripts/');
 
-            // Guarda la imagen en storage
-            Storage::put($rutaTemp, $imagen);
+                $script = $scriptPath . 'hand_prediction.py'; // Nombre del script Python
+                
+                $command = "python $script $rutaTemp"; // Comando para ejecutar el script Python
+                $output = shell_exec($command);
+                dd($output);
+                // Capturar la salida del script
+                $porcentajes = explode("\n", trim($output)); // Divide la salida en un array por líneas
+                $fracture_percentage = floatval(str_replace('Probabilidad de mano rota: ', '', $porcentajes[0]));
+                
+                // Utiliza los porcentajes como desees
+                
+                // Elimina la imagen temporal
+                Storage::disk('public')->delete($rutaTemp);
 
-            // Ejecutar el script Python
-            // Ejecutar el script Python
-            // $scriptPath = storage_path('scripts\\'); // Ruta al directorio de scripts
-            $scriptPath = '/storage/scripts/'; // Ruta al directorio de scripts
-            $script = $scriptPath . 'hand_prediction.py'; // Nombre del script Python
-            $command = "python3 $script $nombreImagen"; // Comando para ejecutar el script Python
-            $output = shell_exec($command);
-            dd($output);
-            // Capturar la salida del script
-            $porcentajes = explode("\n", trim($output)); // Divide la salida en un array por líneas
-            $fracture_percentage = floatval(str_replace('Probabilidad de mano rota: ', '', $porcentajes[0]));
-            // $not_fracture_percentage = floatval(str_replace('Probabilidad de mano no rota: ', '', $porcentajes[1]));
-
-            // Utiliza los porcentajes como desees
-
-            // Utiliza los porcentajes como desees
-
-            // Elimina la imagen temporal
-            Storage::delete($rutaTemp);
-
-            return response()->json(['mensaje' => 'Imagen recibida y procesada correctamente']);
+                return response()->json(['mensaje' => 'Imagen recibida y procesada correctamente']);
+            }
         } else {
             return response()->json(['error' => 'No se encontró ninguna imagen en la solicitud'], 400);
         }
