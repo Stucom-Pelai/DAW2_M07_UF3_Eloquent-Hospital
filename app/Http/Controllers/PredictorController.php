@@ -20,12 +20,11 @@ class PredictorController extends Controller
                 
                 // Guarda la imagen en la carpeta public/storage/temp con el nombre único
                 $rutaTemp = Storage::disk('public')->put('temp', $imagen);
-                
                 // Ejecutar el script Python
                 // $scriptPath = storage_path('scripts\\'); // Ruta al directorio de scripts
-                $scriptPath = storage_path('\app\\public\\scripts\\');
+                // $scriptPath = storage_path('app\\public\\scripts\\');
+                $scriptPath = storage_path('app\\public\\scripts\\');
               
-
                 $script = $scriptPath . 'hand_prediction.py'; // Nombre del script Python
                 $command = "py $script $rutaTemp"; // Comando para ejecutar el script Python
                 $output = shell_exec($command);
